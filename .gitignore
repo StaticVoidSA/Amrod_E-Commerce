@@ -1,1 +1,47 @@
-.vs
+# ========================
+# .NET / ASP.NET Core
+# ========================
+
+# Build outputs
+bin/
+obj/
+out/
+
+# Visual Studio / Rider / VS Code
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# ASP.NET Core temp
+wwwroot/lib/
+appsettings.*.json
+*.db
+
+# Logs
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Rider
+.idea/
+
+# Others
+*.vsix
+*.cache
+*.pdb
+*.mdb
+
+# Optional: EF Migrations
+# If you want to track migrations, leave /Migrations in
+# If you want EF to generate migrations separately and ignore them:
+# Migrations/

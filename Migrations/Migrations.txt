@@ -1,0 +1,5 @@
+﻿// NOTE: To add a migration
+dotnet ef migrations add AddedSomeTable
+
+// NOTE: To update the db with the newly added migration
+dotnet ef database update
