@@ -15,14 +15,22 @@ namespace Amrod_E_Commerce.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("get-all-products")]
+        public async Task<IActionResult> GetAllProducts()
         {
             var products = await _service.GetAllProducts();
             return Ok(products);
         }
 
-        [HttpPost]
+        [HttpGet("get-product/{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var product = await _service.GetProduct(id);
+            if (product == null) return NotFound();
+            return Ok(product);
+        }
+
+        [HttpPost("create")]
         public async Task<IActionResult> Create(Product product)
         {
             var result = await _service.CreateProduct(product);

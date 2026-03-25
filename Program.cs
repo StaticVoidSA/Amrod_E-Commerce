@@ -1,11 +1,14 @@
-using Microsoft.EntityFrameworkCore;
 using Amrod_E_Commerce.Data.Context;
+using Amrod_E_Commerce.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<ProductService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
