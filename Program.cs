@@ -1,25 +1,40 @@
 using Amrod_E_Commerce.Data.Context;
+using Amrod_E_Commerce.Data.Entities;
 using Amrod_E_Commerce.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<CartService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("defaultConnection")
         //sqlOptions => sqlOptions.EnableRetryOnFailure(
-        //    maxRetryCount: 5,          
-        //    maxRetryDelay: TimeSpan.FromSeconds(10), 
-        //    errorNumbersToAdd: null     
+        //    maxRetryCount: 5,
+        //    maxRetryDelay: TimeSpan.FromSeconds(10),
+        //    errorNumbersToAdd: null
         //)
     )
 );
+
+
+// Identity
+builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+})
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -31,6 +46,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseAuthentication(); 
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -38,7 +60,5 @@ app.MapControllers();
 app.UseRouting();
 
 app.UseAuthorization();
-
-app.MapRazorPages();
 
 app.Run();

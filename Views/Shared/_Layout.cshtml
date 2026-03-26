@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Amrod E-Commerce</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="light-theme" id="body">
+    <header class="topbar">
+        <button id="sidebarToggle">☰</button>
+        <h1>Amrod Online</h1>
+        <button id="themeToggle">🌙 / ☀️</button>
+    </header>
+
+    <div class="layout">
+        <nav id="sidebar" class="sidebar collapsed">
+            <ul>
+                <li><a href="/"><span class="icon">🏠</span> <span class="text">Home</span></a></li>
+                <li><a href="/api/Product/get-all-products"><span class="icon">🛒</span> <span class="text">Products</span></a></li>
+                <li><a href="/User/Login"><span class="icon">🔑</span> <span class="text">Login</span></a></li>
+                <li><a href="/User/Register"><span class="icon">✍️</span> <span class="text">Create User</span></a></li>
+                <li><a href="/Cart"><span class="icon">🛍️</span> <span class="text">Cart</span></a></li>
+                <li><a href="/api/User/Profile"><span class="icon">👤</span> <span class="text">Profile</span></a></li>
+            </ul>
+        </nav>
+
+        <main id="main-content">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/js/site.js"></script>
+</body>
+</html>

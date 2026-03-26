@@ -1,18 +1,21 @@
 ﻿using Amrod_E_Commerce.Data.Entities;
 using Amrod_E_Commerce.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Amrod_E_Commerce.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : Controller
     {
         private readonly UserService _userService;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserController(UserService userService)
+        public UserController(UserService userService, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userService = userService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpPost("Create")]
@@ -99,6 +102,64 @@ namespace Amrod_E_Commerce.Controllers
             {
                 return StatusCode(500, $"Unexpected error: {ex.Message}");
             }
+        }
+
+        [HttpGet("User/Register")]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(User model, string password)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var user = new User
+            {
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+
+            var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: false);
+                return RedirectToAction("Profile");
+            }
+
+            foreach (var error in result.Errors)
+                ModelState.AddModelError("", error.Description);
+
+            return View(model);
+        }
+
+
+        [HttpGet("User/Login")]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost("User/Login")]
+        public async Task<IActionResult> Login(string email, string password)
+        {
+            var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
+
+            if (result.Succeeded)
+                return RedirectToAction("Profile");
+
+            ModelState.AddModelError("", "Invalid login");
+            return View();
+        }
+        
+        public async Task<IActionResult> Profile()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login");
+
+            return View(user);
         }
     }
 }

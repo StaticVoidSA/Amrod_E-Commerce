@@ -1,0 +1,162 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Profile";
+}
+
+@model Amrod_E_Commerce.Data.Entities.User
+
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="avatar">@Model.FirstName.Substring(0, 1)@Model.LastName.Substring(0, 1)</div>
+            <h2>@Model.FirstName @Model.LastName</h2>
+            <p class="email">@Model.Email</p>
+        </div>
+
+        <div class="profile-details">
+            <div class="detail">
+                <span class="label">First Name:</span>
+                <span class="value">@Model.FirstName</span>
+            </div>
+            <div class="detail">
+                <span class="label">Last Name:</span>
+                <span class="value">@Model.LastName</span>
+            </div>
+            <div class="detail">
+                <span class="label">Email:</span>
+                <span class="value">@Model.Email</span>
+            </div>
+            <div class="detail">
+                <span class="label">Joined:</span>
+                <span class="value">@Model.CreatedAt.ToString("MMMM dd, yyyy")</span>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="/" class="btn btn-primary">Back to Home</a>
+            <a href="/User/Edit" class="btn btn-secondary">Edit Profile</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* --- Profile Container --- */
+    .profile-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 60px); /* leave room for topbar */
+        padding: 20px;
+    }
+
+    /* --- Card --- */
+    .profile-card {
+        background-color: var(--card-bg);
+        color: var(--text-color);
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        max-width: 400px;
+        width: 100%;
+        padding: 30px 20px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* --- Header --- */
+    .profile-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .profile-header .avatar {
+        background-color: var(--accent-color);
+        color: #fff;
+        font-weight: bold;
+        font-size: 2rem;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 15px;
+    }
+
+    /* --- Email --- */
+    .profile-header .email {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    /* --- Details --- */
+    .profile-details {
+        margin-bottom: 25px;
+    }
+
+    .profile-details .detail {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .profile-details .label {
+        font-weight: bold;
+    }
+
+    .profile-details .value {
+        color: var(--text-color);
+    }
+
+    /* --- Actions --- */
+    .profile-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .profile-actions .btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        text-decoration: none;
+        text-align: center;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+        background-color: var(--accent-color);
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        opacity: 0.85;
+    }
+
+    .btn-secondary {
+        background-color: transparent;
+        border: 1px solid var(--accent-color);
+        color: var(--accent-color);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--accent-color);
+        color: #fff;
+    }
+
+    /* --- Dark / Light Theme Variables --- */
+    body.light-theme {
+        --card-bg: #fff;
+        --text-color: #222;
+        --text-muted: #555;
+        --border-color: #ddd;
+        --accent-color: #007bff;
+    }
+
+    body.dark-theme {
+        --card-bg: #1e1e2f;
+        --text-color: #eee;
+        --text-muted: #aaa;
+        --border-color: #444;
+        --accent-color: #4da6ff;
+    }
+
+</style>
