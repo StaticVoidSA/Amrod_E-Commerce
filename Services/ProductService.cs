@@ -1,5 +1,6 @@
 ﻿using Amrod_E_Commerce.Data.Context;
 using Amrod_E_Commerce.Data.Entities;
+using Amrod_E_Commerce.ViewModels;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
@@ -128,6 +129,61 @@ namespace Amrod_E_Commerce.Services
                 Console.Error.WriteLine($"Unexpected error deleting product: {ex.Message}");
                 throw;
             }
+        }
+
+        // Lazy-loading Products
+        public async Task<PagedResult<Product>> GetProductsPaged(
+            int pageNumber = 1,
+            int pageSize = 20,
+            string? searchTerm = null,
+            decimal? minPrice = null,
+            decimal? maxPrice = null,
+            int? minStock = null,
+            int? maxStock = null,
+            string? orderBy = null,
+            bool ascending = true)
+        {
+            var query = _db.Products.AsQueryable();
+
+            // Search
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                searchTerm = searchTerm.Trim().ToLower();
+                query = query.Where(p =>
+                    p.Name.ToLower().Contains(searchTerm) ||
+                    (p.Description != null && p.Description.ToLower().Contains(searchTerm))
+                );
+            }
+
+            // Price filters
+            if (minPrice.HasValue)
+                query = query.Where(p => p.Price >= minPrice.Value);
+            if (maxPrice.HasValue)
+                query = query.Where(p => p.Price <= maxPrice.Value);
+
+            // Ordering
+            query = (orderBy?.ToLower()) switch
+            {
+                "name" => ascending ? query.OrderBy(p => p.Name) : query.OrderByDescending(p => p.Name),
+                "stock" => ascending ? query.OrderBy(p => p.Stock) : query.OrderByDescending(p => p.Stock),
+                "price" => ascending ? query.OrderBy(p => p.Price) : query.OrderByDescending(p => p.Price),
+                _ => query.OrderBy(p => p.Name)
+            };
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<Product>
+            {
+                Items = items,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalCount = totalCount
+            };
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Amrod_E_Commerce.Data.Entities;
 using Amrod_E_Commerce.Services;
+using Amrod_E_Commerce.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -111,21 +112,27 @@ namespace Amrod_E_Commerce.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(User model, string password)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid) 
+                return View(model);
 
             var user = new User
             {
+                UserName = model.Email,
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName
             };
 
-            var result = await _userManager.CreateAsync(user, password);
+            var result = await _userManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+                return Content(string.Join(" | ", result.Errors.Select(e => e.Description)));
+
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                await _signInManager.SignInAsync(user, false);
                 return RedirectToAction("Profile");
             }
 
