@@ -51,7 +51,7 @@
                     <div class="d-flex justify-content-between align-items-end mb-2">
                         <span class="fs-5 fw-bold text-primary">@product.Price.ToString("C", CultureInfo.GetCultureInfo("en-ZA"))</span>
                     </div>
-                    <a href="#" class="btn btn-primary btn-sm w-100">Add to Cart</a>
+                    <button href="#" @(product.Stock <= 0 ? "disabled" : "") class="btn btn-primary btn-sm w-100">Add to Cart</button>
                 </div>
             </div>
         </div>

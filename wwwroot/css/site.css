@@ -315,6 +315,61 @@ body.dark-theme .auth-footer a {
     overflow: hidden;
 }
 
+/* Dark theme for product cards */
+/* Dark theme for the entire card */
+body.dark-theme .product-card {
+    background-color: #1e1e1e !important;
+    color: #f1f1f1;
+    border: 1px solid #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark theme for the card body specifically */
+body.dark-theme .product-card .card-body {
+    background-color: transparent !important; /* inherit parent */
+    color: #f1f1f1;
+}
+
+/* Dark theme for card title and text */
+body.dark-theme .product-card .card-title,
+body.dark-theme .product-card .card-text {
+    color: #f1f1f1;
+}
+
+/* Dark theme for badges */
+body.dark-theme .product-card .badge.bg-success {
+    background-color: #28a745; /* or slightly muted green for dark theme */
+    color: #fff;
+}
+
+body.dark-theme .product-card .badge.bg-warning {
+    background-color: #ffc107;
+    color: #222;
+}
+
+body.dark-theme .product-card .badge.bg-danger {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* Dark theme for buttons */
+body.dark-theme .product-card .btn-primary {
+    background-color: #3399ff;
+    border-color: #3399ff;
+    color: #fff;
+}
+
+body.dark-theme .product-card .btn-primary:disabled {
+    background-color: #555; /* muted disabled button */
+    border-color: #555;
+    color: #ccc;
+}
+
+body.dark-theme .product-card .btn-light {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
 @media (min-width: 769px) {
     .sidebar:not(.collapsed) {
         width: 200px !important;
