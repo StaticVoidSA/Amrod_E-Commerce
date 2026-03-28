@@ -17,7 +17,7 @@ namespace Amrod_E_Commerce.Controllers
         [HttpGet("get-all-products")]
         public async Task<IActionResult> GetAllProducts(
             int pageNumber = 1,
-            int pageSize = 25,
+            int pageSize = 10,
             string? searchTerm = null,
             decimal? minPrice = null,
             decimal? maxPrice = null,
@@ -55,8 +55,30 @@ namespace Amrod_E_Commerce.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var product = await _service.GetProduct(id);
+            if (product == null) 
+                return NotFound();
+            
+            return View(product);
+        }
+
+        [HttpGet("get-product-partial/{id}")]
+        public async Task<IActionResult> GetProductPartial(Guid id)
+        {
+            var product = await _service.GetProduct(id);
             if (product == null) return NotFound();
-            return Ok(product);
+
+            return PartialView("_ProductCard", product);
+        }
+
+        [HttpGet("get-edit-product-partial/{id}")]
+        public async Task<IActionResult> GetEditProductPartial(Guid id)
+        {
+            var product = await _service.GetProduct(id);
+
+            if (product == null)
+                return NotFound();
+
+            return PartialView("_EditProductPartial", product);
         }
 
         [HttpPost("create")]
@@ -64,6 +86,31 @@ namespace Amrod_E_Commerce.Controllers
         {
             var result = await _service.CreateProduct(product);
             return Ok(result);
+        }
+
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] Product updatedProduct)
+        {
+            if (updatedProduct == null || id != updatedProduct.Id)
+                return BadRequest("Invalid product data.");
+
+            try
+            {
+                var product = await _service.UpdateProduct(id, updatedProduct);
+                return Ok(product);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound("Product not found.");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

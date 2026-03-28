@@ -1,0 +1,43 @@
+﻿@model Amrod_E_Commerce.Data.Entities.Product
+
+<div class="d-flex flex-column p-4" style="height: 100%; min-height: 400px;">
+    <h5 class="mb-3">Edit Product</h5>
+
+    <form id="editProductForm" class="d-flex flex-column flex-grow-1">
+        <input type="hidden" name="Id" value="@Model.Id" />
+
+        <div class="mb-2">
+            <label class="form-label">Name</label>
+            <input class="form-control" name="Name" value="@Model.Name" required />
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" name="Description" rows="2">@Model.Description</textarea>
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">Price</label>
+            <input type="text" class="form-control" name="Price" value="@Model.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)" />
+            <div class="form-text text-danger d-none" id="priceError">Please enter a valid numeric price.</div>
+        </div>
+
+        <div class="mb-2">
+            <label class="form-label">Stock</label>
+            <input type="text" class="form-control" name="Stock" value="@Model.Stock" />
+            <div class="form-text text-danger d-none" id="stockError">Please enter a valid numeric stock value.</div>
+        </div>
+
+        <div class="mb-2 d-flex flex-column">
+            <label class="form-label">Image URL</label>
+            <textarea class="form-control mb-2" name="ImageURL" rows="2">@Model.ImageURL</textarea>
+            @* <img id="imagePreview" src="@Model.ImageURL" alt="Preview"
+                 style="max-height: 180px; object-fit: cover; border: 1px solid #dee2e6; border-radius: 4px;"> *@
+        </div>
+
+        <div class="mt-auto d-flex gap-2">
+            <button type="submit" class="btn btn-success w-100">Save</button>
+            <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</div>

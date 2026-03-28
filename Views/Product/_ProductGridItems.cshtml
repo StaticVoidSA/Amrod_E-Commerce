@@ -1,14 +1,15 @@
-﻿@model IEnumerable<Amrod_E_Commerce.Data.Entities.Product>
+﻿@using System.Globalization
+@model IEnumerable<Amrod_E_Commerce.Data.Entities.Product>
 
 @foreach (var product in Model)
 {
     <div class="col">
-        <div class="card h-100 shadow-sm border-0 overflow-hidden hover-lift">
+        <div class="card h-100 shadow-sm border-0 overflow-hidden hover-lift product-card product-card-grid-item" data-id="@product.Id">
             <div class="position-relative" style="height: 180px">
                 <img src="@product.ImageURL"
                      class="card-img-top"
                      alt="@product.Name"
-                     style="object-fit: cover;">
+                     style="width: 100%; height: 180px; object-fit: cover;">
                 @if (product.Stock <= 5 && product.Stock > 0)
                 {
                     <span class="badge bg-warning position-absolute top-0 end-0 m-2">Low Stock</span>
@@ -21,6 +22,21 @@
                 {
                     <span class="badge bg-success position-absolute top-0 end-0 m-2">In Stock</span>
                 }
+
+                <button class="btn btn-light btn-sm position-absolute bottom-0 end-0 m-2 btn-edit-product"
+                        data-id="@product.Id"
+                        title="Edit product"
+                        style="
+                            border-radius: 50%;
+                            width: 36px;
+                            height: 36px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            backdrop-filter: blur(6px);
+                            background: rgba(255,255,255,0.8);">
+                    <i class="bi bi-pencil"></i>
+                </button>
             </div>
 
             <div class="card-body d-flex flex-column p-3">
@@ -33,7 +49,7 @@
 
                 <div class="mt-auto">
                     <div class="d-flex justify-content-between align-items-end mb-2">
-                        <span class="fs-5 fw-bold text-primary">$@product.Price.ToString("0.00")</span>
+                        <span class="fs-5 fw-bold text-primary">@product.Price.ToString("C", CultureInfo.GetCultureInfo("en-ZA"))</span>
                     </div>
                     <a href="#" class="btn btn-primary btn-sm w-100">Add to Cart</a>
                 </div>
