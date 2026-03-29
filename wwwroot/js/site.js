@@ -5,7 +5,7 @@
     const body = document.getElementById("body");
 
     // Theme
-    const savedTheme = localStorage.getItem("theme") || "light-theme";
+    const savedTheme = localStorage.getItem("theme") || "dark-theme";
     body.classList.remove("light-theme", "dark-theme");
     body.classList.add(savedTheme);
 
