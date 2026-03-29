@@ -315,6 +315,67 @@ body.dark-theme .auth-footer a {
     overflow: hidden;
 }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Cart wrapper */
+.cart-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    color: #222; /* default icon color */
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.15s;
+}
+
+    .cart-wrapper:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+        transform: scale(1.1);
+    }
+
+body.dark-theme .cart-wrapper {
+    color: #eee;
+}
+
+    body.dark-theme .cart-wrapper:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+/* Cart Icon */
+.cart-icon {
+    font-size: 28px;
+    line-height: 1;
+    vertical-align: middle; /* ensures badge sits at top-right */
+    color: inherit; /* inherit wrapper color */
+}
+
+/* Badge / Counter */
+.cart-badge {
+    position: absolute;
+    top: 2px; /* top-right corner */
+    right: 2px;
+    background-color: #e63939; /* red badge */
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #fff; /* white border */
+    line-height: 1;
+    pointer-events: none;
+}
+
 /* Dark theme for product cards */
 /* Dark theme for the entire card */
 body.dark-theme .product-card {

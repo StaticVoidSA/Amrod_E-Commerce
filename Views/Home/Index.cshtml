@@ -3,5 +3,194 @@
     ViewData["Title"] = "Home";
 }
 
-<h2>Welcome to Amrod E-Commerce</h2>
-<p>Use the sidebar to navigate your app.</p>
+<div class="home-container">
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to <span>Amrod E-Commerce</span></h1>
+            <p>Your one-stop shop for quality products at unbeatable prices.</p>
+
+            <div class="hero-actions">
+                <a href="/Product/get-all-products" class="btn primary">Shop Now</a>
+                <a href="/api/Cart/GetCartProducts" class="btn secondary">View Cart</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <div class="icon">🚚</div>
+            <h3>Fast Delivery</h3>
+            <p>Get your products delivered quickly and reliably.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">💳</div>
+            <h3>Secure Payments</h3>
+            <p>Multiple secure payment options for your convenience.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="icon">⭐</div>
+            <h3>Top Quality</h3>
+            <p>We offer only the best products from trusted suppliers.</p>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Ready to start shopping?</h2>
+        <a href="/Product/get-all-products" class="btn primary large">Browse Products</a>
+    </section>
+</div>
+<style>
+    .home-container {
+        padding: 20px 10px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: white;
+        border-radius: 16px;
+        padding: 60px 40px;
+        text-align: center;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .hero h1 span {
+        color: #facc15;
+    }
+
+    .hero p {
+        font: 1.2rem;
+        margin-bottom: 25px;
+        opacity: 0.9;
+    }
+
+    .btn {
+        padding: 12px 24px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin: 5px;
+        display: inline-block;
+    }
+
+    .btn.primary {
+        background: #facc15;
+        color: #111;
+    }
+
+    .btn.primary:hover {
+        background: #eab308;
+        transform: translateY(-2px);
+    }
+
+    .btn.secondary {
+        background: rgba(255,255,255,0.2);
+        color: white;
+    }
+
+    .btn.secondary:hover {
+        background: rgba(255,255,255,0.3);
+    }
+
+    .btn.large {
+        padding: 16px 32px;
+        font-size: 1.1rem;
+    }
+
+    .features {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        width: 280px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-8px);
+    }
+
+    .feature-card .icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    .cta {
+        text-align: center;
+        padding: 40px;
+        background: #f9fafb;
+        border-radius: 16px;
+    }
+
+    .cta h2 {
+        margin-bottom: 20px;
+    }
+
+    body.dark-theme {
+        background-color: #0f172a;
+        color: #e5e7eb;
+    }
+
+    body.dark-theme .hero {
+        background: linear-gradient(135deg, #1e293b, #312e81);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    body.dark-theme .hero p {
+        opacity: 0.85;
+    }
+
+    body.dark-theme .btn.primary {
+        background: #facc15;
+        color: #111;
+    }
+
+    body.dark-theme .btn.secondary {
+        background: rgba(255,255,255,0.1);
+    }
+
+    body.dark-theme .feature-card {
+        background: #1e293b; 
+        color: #e5e7eb;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    }
+
+    body.dark-theme .feature-card:hover {
+        transform: translateY(-8px) scale(1.02);
+    }
+
+    body.dark-theme .feature-card .icon {
+        color: #facc15;
+    }
+
+    body.dark-theme .cta {
+        background: #1e293b;
+    }
+
+    body.dark-theme .btn.secondary:hover {
+        background: rgba(255,255,255,0.2);
+    }
+
+    body, .hero, .feature-card, .cta, .btn {
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+
+</style>

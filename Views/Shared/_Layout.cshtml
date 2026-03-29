@@ -8,31 +8,74 @@
     <title>@ViewData["Title"] - Amrod E-Commerce</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
 </head>
 <body class="light-theme" id="body">
     <header class="topbar">
         <button id="sidebarToggle">☰</button>
         <h1>Amrod Online</h1>
 
-        <div>
-            @if (User.Identity.IsAuthenticated)
+        <div class="header-right">
+            @* @if (User.Identity.IsAuthenticated)
             {
                 <span class="header-user-name">Welcome, @User.Identity.Name</span>
-            }
+            } *@
+            <a href="/api/Cart/GetCartProducts" class="cart-wrapper" title="View Cart">
+                <span class="material-symbols-outlined cart-icon">shopping_cart</span>
+                <span id="cart-count" class="cart-badge">0</span>
+            </a>
         </div>
 
-        <button id="themeToggle">🌙 / ☀️</button>
+        <label class="theme-switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+        </label>
     </header>
 
     <div class="layout">
         <nav id="sidebar" class="sidebar collapsed">
             <ul>
-                <li><a href="/"><span class="icon">🏠</span> <span class="text">Home</span></a></li>
-                <li><a href="/Product/get-all-products"><span class="icon">🛒</span> <span class="text">Products</span></a></li>
-                <li><a href="/User/Login"><span class="icon">🔑</span> <span class="text">Login</span></a></li>
-                <li><a href="/User/Register"><span class="icon">✍️</span> <span class="text">Create User</span></a></li>
-                <li><a href="/Cart"><span class="icon">🛍️</span> <span class="text">Cart</span></a></li>
-                <li><a href="/api/User/Profile"><span class="icon">👤</span> <span class="text">Profile</span></a></li>
+                <li>
+                    <a href="/">
+                        <span class="material-symbols-outlined">home</span>
+                        <span class="text sidebar-text">Home</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/Product/get-all-products">
+                        <span class="material-symbols-outlined">shopping_cart</span>
+                        <span class="text sidebar-text">Products</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/User/Login">
+                        <span class="material-symbols-outlined">login</span>
+                        <span class="text sidebar-text">Login</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/User/Register">
+                        <span class="material-symbols-outlined">person_add</span>
+                        <span class="text sidebar-text">Create User</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/api/Cart/GetCartProducts">
+                        <span class="material-symbols-outlined">shopping_bag</span>
+                        <span class="text sidebar-text">Cart</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/User/Profile">
+                        <span class="material-symbols-outlined">account_circle</span>
+                        <span class="text sidebar-text">Profile</span>
+                    </a>
+                </li>
             </ul>
         </nav>
 
@@ -41,5 +84,174 @@
         </main>
     </div>
     <script src="~/js/site.js"></script>
+
+    <style>
+        .sidebar-text {
+            margin-left: 1rem;
+        }
+
+        .cart-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            margin-right: 1rem;
+            border-radius: 12px;
+            color: #222; 
+            text-decoration: none;
+            transition: background-color 0.2s, transform 0.15s;
+        }
+
+        .cart-wrapper:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: scale(1.1);
+        }
+
+        body.dark-theme .cart-wrapper {
+            color: #eee;
+        }
+
+        body.dark-theme .cart-wrapper:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .cart-icon {
+            font-size: 28px;
+            line-height: 1;
+            vertical-align: middle; 
+            color: inherit; 
+        }
+
+
+        .cart-badge {
+            position: absolute;
+            top: 2px; 
+            right: 2px;
+            background-color: #e63939; 
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px #fff; /* white border */
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 65px; 
+            height: 30px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #4a2b8a, #2c1b5e);
+            transition: .4s;
+            border-radius: 60px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 25px;
+            width: 25px;
+            left: 37px;
+            bottom: 2.5px;
+            background: #fff9e6;
+            border-radius: 50%;
+            transition: .4s;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15), inset 0 3px 6px rgba(255, 255, 255, 0.6), inset 0 -3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider:after {
+            content: "";
+            position: absolute;
+            left: 9px;
+            top: 7px;
+            width: 11px;
+            height: 11px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(255,255,255,0.15), 6px -3px 0 0.5px rgba(255,255,255,0.9), -2px 4.5px 0 0.5px rgba(255,255,255,0.7), 4.5px 5.5px 0 0.5px rgba(255,255,255,0.6);
+            transform: rotate(20deg);
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+            left: 30px;
+            top: 7px;
+            width: 1.5px;
+            height: 1.5px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 11px 3.5px 0 0.5px white, 17.5px 11px 0 0.5px white, 5px 13.5px 0 0.5px white, 14px 16px 0 0.5px white;
+            opacity: 0.9;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(-50px);
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(135deg, #ffeb3b, #ffb300);
+        }
+
+    </style>
+
+    <script>
+        function updateCartCount() {
+                fetch('/api/cart/count', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(res => {
+                    if (res.ok) return res.json();
+                    return { count: 0 };
+                })
+                .then(data => {
+                    const countEl = document.getElementById('cart-count');
+                    if (countEl) {
+                        countEl.textContent = data.count || 0;
+
+                        if (data.count > 0) {
+                            countEl.classList.remove('bg-secondary');
+                            countEl.classList.add('bg-danger');
+                        } else {
+                            countEl.classList.remove('bg-danger');
+                            countEl.classList.add('bg-secondary');
+                        }
+                    }
+                })
+                .catch(() => {
+
+                });
+            }
+
+        document.addEventListener('DOMContentLoaded', updateCartCount);
+        document.addEventListener('cart_items_updated', updateCartCount);
+        window.updateCartCount = updateCartCount;
+    </script>
 </body>
 </html>

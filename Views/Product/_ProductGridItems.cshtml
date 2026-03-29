@@ -51,9 +51,72 @@
                     <div class="d-flex justify-content-between align-items-end mb-2">
                         <span class="fs-5 fw-bold text-primary">@product.Price.ToString("C", CultureInfo.GetCultureInfo("en-ZA"))</span>
                     </div>
-                    <button href="#" @(product.Stock <= 0 ? "disabled" : "") class="btn btn-primary btn-sm w-100">Add to Cart</button>
+                    <button 
+                        data-product-id="@product.Id"
+                        @(product.Stock <= 0 ? "disabled" : "") 
+                            class="btn btn-primary btn-sm w-100 btn-add-to-cart">
+                        Add to Cart
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 }
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).on('click', '.btn-add-to-cart', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        const $btn = $(this);
+        $btn.prop('disabled', true).text('Adding...');
+
+        const productId = $(this).data('product-id');
+
+        fetch(`/api/cart/AddItem?productId=${productId}&quantity=1`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+        .then(async res => {
+
+            if (res.redirected) {
+                window.location.href = res.url; 
+                return;
+            }
+
+            if (res.status === 401) {
+                window.location.href = '/User/Login';
+                return;
+            }
+
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(text);
+            }
+
+            return res.json();
+        })
+        .then(data => {
+            if (!data) 
+                return;
+
+            $btn.prop('disabled', false).text('Add to Cart');
+            alert("Item added to cart!");
+
+            document.dispatchEvent(new CustomEvent('cart_items_updated'))
+
+            if (typeof window.updateCartCount === 'function') {
+                debugger
+                window.updateCartCount();  
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert(err.message);
+            $btn.prop('disabled', false).text('Add to Cart');
+        });
+
+    });
+</script>

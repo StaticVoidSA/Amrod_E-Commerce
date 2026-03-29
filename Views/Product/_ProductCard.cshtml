@@ -39,9 +39,11 @@
                 @Model.Price.ToString("C", CultureInfo.GetCultureInfo("en-ZA"))
             </p>
 
-            <a href="#" class="btn btn-primary w-100">
+            <button data-product-id="@Model.Id"
+                    @(Model.Stock <= 0 ? "disabled" : "")
+                    class="btn btn-primary btn-sm w-100 btn-add-to-cart">
                 Add to Cart
-            </a>
+            </button>
         </div>
 
     </div>
@@ -80,3 +82,54 @@
         transform: scale(1.05);
     }
 </style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).on('click', '.btn-add-to-cart', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+
+        const $btn = $(this);
+        $btn.prop('disabled', true).text('Adding...');
+
+        const productId = $(this).data('product-id');
+
+        fetch(`/api/cart/AddItem?productId=${productId}&quantity=1`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+        .then(async res => {
+
+            if (res.redirected) {
+                window.location.href = res.url;
+                return;
+            }
+
+            if (res.status === 401) {
+                window.location.href = '/User/Login';
+                return;
+            }
+
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(text);
+            }
+
+            return res.json();
+        })
+        .then(data => {
+            if (!data) return;
+
+            alert("Item added to cart!");
+            $btn.prop('disabled', false).text('Add to Cart');
+
+            document.dispatchEvent(new CustomEvent('cart_items_updated'))
+        })
+        .catch(err => {
+            console.error(err);
+            alert(err.message);
+            $btn.prop('disabled', false).text('Add to Cart');
+        });
+    });
+</script>
