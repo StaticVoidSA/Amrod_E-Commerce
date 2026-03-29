@@ -9,6 +9,8 @@
     body.classList.remove("light-theme", "dark-theme");
     body.classList.add(savedTheme);
 
+    themeBtn.checked = savedTheme === 'light-theme';
+
     // Toggle logic
     toggleBtn.addEventListener("click", (e) => {
         e.stopPropagation();

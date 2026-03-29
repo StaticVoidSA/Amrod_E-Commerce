@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Amrod_E-Commerce")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bcc3c235b225f96c8d827825d16ce771bbdd6ffd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8ea4ddd407a9e02884c7e913fd7c952f9553807")]
 [assembly: System.Reflection.AssemblyProductAttribute("Amrod_E-Commerce")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Amrod_E-Commerce")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
