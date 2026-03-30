@@ -77,9 +77,17 @@
               "target": "Package",
               "version": "[8.0.25, )"
             },
-            "xunit.extensibility.core": {
+            "Microsoft.NET.Test.Sdk": {
               "target": "Package",
-              "version": "[2.9.3, )"
+              "version": "[18.3.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.9.2, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[3.1.5, )"
             }
           },
           "imports": [
