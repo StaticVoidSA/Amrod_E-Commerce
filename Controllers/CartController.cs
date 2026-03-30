@@ -153,6 +153,8 @@ namespace Amrod_E_Commerce.Controllers
                 var products = await _cartService.GetCartProducts(user);
 
                 ViewData["UserFullName"] = $"{user.FirstName} {user.LastName}";
+                ViewData["CartItemsCount"] = products.Sum(item => item.Quantity);
+                ViewData["CartItemsTotal"] = products.Sum(item => item.Quantity * item.Price);
 
                 return View("Cart", products);
             }

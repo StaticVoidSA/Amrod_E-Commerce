@@ -4,6 +4,8 @@
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Cart";
+    var totalItems = ViewData["CartItemsCount"] ?? 0;
+    var totalPrice = ViewData["CartItemsTotal"] ?? 0;
 }
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -61,6 +63,24 @@
                             </tr>
                         }
                     </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td colspan="5" class="text-end pe-4">
+                                <div class="cart-summary">
+                                    <div class="summary-row">
+                                        <span class="summary-label">Items:</span>
+                                        <span class="summary-value">@totalItems</span>
+                                    </div>
+                                    <div class="summary-row">
+                                        <span class="summary-label">Total:</span>
+                                        <span class="summary-value">
+                                            @String.Format("{0:C}", totalPrice)
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         }
@@ -155,6 +175,38 @@
         --table-header-color: #fff;
         --table-border-color: #333;
         --table-hover-bg: #2a2a2a;
+        --summary-label-color: #272727;
+        --summary-value-color: #272727;
+    }
+
+    .cart-summary {
+        display: inline-block;
+        text-align: right;
+        min-width: 250px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        font-size: 1rem;
+    }
+
+    .summary-label {
+        font-weight: 600;
+        margin-left: 20px;
+        color: var(--summary-label-color, #000);
+    }
+
+    .summary-value {
+        font-weight: bold;
+        margin-left: 20px;
+        color: var(--summary-value-color, #198754);
+    }
+
+    tfoot.table-light {
+        background-color: var(--table-hover-bg, #f8f9fa);
+        border-top: 2px solid var(--table-border-color, #dee2e6);
     }
 
     .table-responsive::-webkit-scrollbar {
@@ -195,6 +247,7 @@
             if (row) 
                 row.remove();
 
+            location.reload();
             alert(`Cart item removed successfully.`);
         } catch (err) {
             alert("Error removing cart item:", err);
